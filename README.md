@@ -189,27 +189,129 @@ POST /api/auth/password/change/ → change password (Bearer token)
 ```
 
 ## 🔗 Core Endpoints
-## Categories (admin write)
+## 🗂 Categories API — Cheatsheet (admin write)
 
-GET /api/categories/
+> List is public; **create/update/delete require admin/staff** (IsAdminOrReadOnly).
 
-POST /api/categories/ ({ name, slug })
+<table>
+  <tr>
+    <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
+    <td><code>/api/categories/</code></td>
+    <td>
+      List categories (supports search/order/pagination).<br/>
+      <strong>Query</strong>:
+      <code>?search=py</code>,
+      <code>?ordering=name</code>,
+      <code>?page=1&amp;page_size=20</code>
+    </td>
+  </tr>
 
-GET /api/categories/{slug}/
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/categories/</code></td>
+    <td>
+      Create a category (admin).<br/>
+      <code>{ "name": "Python", "slug": "python" }</code>
+    </td>
+  </tr>
 
-PUT/PATCH/DELETE /api/categories/{slug}/
+  <tr>
+    <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
+    <td><code>/api/categories/{slug}/</code></td>
+    <td>Retrieve a category (by slug).</td>
+  </tr>
 
-## Tags (admin write)
+  <tr>
+    <td><img src="https://img.shields.io/badge/PUT-orange?style=for-the-badge" /></td>
+    <td><code>/api/categories/{slug}/</code></td>
+    <td>
+      Full update (admin).<br/>
+      <code>{ "name": "Python &amp; Django", "slug": "python-django" }</code>
+    </td>
+  </tr>
 
-GET /api/tags/
+  <tr>
+    <td><img src="https://img.shields.io/badge/PATCH-purple?style=for-the-badge" /></td>
+    <td><code>/api/categories/{slug}/</code></td>
+    <td>
+      Partial update (admin).<br/>
+      <code>{ "name": "Python" }</code>
+    </td>
+  </tr>
 
-POST /api/tags/ ({ name, slug })
+  <tr>
+    <td><img src="https://img.shields.io/badge/DELETE-red?style=for-the-badge" /></td>
+    <td><code>/api/categories/{slug}/</code></td>
+    <td>Delete a category (admin).</td>
+  </tr>
+</table>
 
-GET /api/tags/{slug}/
+### Notes
+- <strong>Slug</strong> is unique and used in URLs; choose URL-safe slugs (e.g., <code>django-rest</code>).
+- Useful for post writes: send <code>category</code> as its <em>slug</em> in the Post write payload.
 
-PUT/PATCH/DELETE /api/tags/{slug}/
+---
 
-## Posts
+## 🏷 Tags API — Cheatsheet (admin write)
+
+> List is public; **create/update/delete require admin/staff** (IsAdminOrReadOnly).
+
+<table>
+  <tr>
+    <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
+    <td><code>/api/tags/</code></td>
+    <td>
+      List tags (supports search/order/pagination).<br/>
+      <strong>Query</strong>:
+      <code>?search=drf</code>,
+      <code>?ordering=name</code>,
+      <code>?page=1&amp;page_size=20</code>
+    </td>
+  </tr>
+
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/tags/</code></td>
+    <td>
+      Create a tag (admin).<br/>
+      <code>{ "name": "DRF", "slug": "drf" }</code>
+    </td>
+  </tr>
+
+  <tr>
+    <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
+    <td><code>/api/tags/{slug}/</code></td>
+    <td>Retrieve a tag (by slug).</td>
+  </tr>
+
+  <tr>
+    <td><img src="https://img.shields.io/badge/PUT-orange?style=for-the-badge" /></td>
+    <td><code>/api/tags/{slug}/</code></td>
+    <td>
+      Full update (admin).<br/>
+      <code>{ "name": "Django REST", "slug": "django-rest" }</code>
+    </td>
+  </tr>
+
+  <tr>
+    <td><img src="https://img.shields.io/badge/PATCH-purple?style=for-the-badge" /></td>
+    <td><code>/api/tags/{slug}/</code></td>
+    <td>
+      Partial update (admin).<br/>
+      <code>{ "name": "Django" }</code>
+    </td>
+  </tr>
+
+  <tr>
+    <td><img src="https://img.shields.io/badge/DELETE-red?style=for-the-badge" /></td>
+    <td><code>/api/tags/{slug}/</code></td>
+    <td>Delete a tag (admin).</td>
+  </tr>
+</table>
+
+### Notes
+- <strong>Slug</strong> is unique and used in Post write payloads (e.g., <code>"tags": ["drf","django"]</code>).
+- Keep names human-readable; use lowercase hyphenated slugs for consistency.
 
 ## 📝 Posts API — Colorful Cheatsheet
 
@@ -310,8 +412,6 @@ PUT/PATCH/DELETE /api/tags/{slug}/
 - <strong>Write serializer expects slugs</strong> for <code>category</code> and <code>tags</code>.
 - Publish rule: <code>PUBLISHED</code> posts must have a non-empty <code>body</code>.
 - Flags in list/detail: <code>is_liked_by_me</code>, <code>is_bookmarked_by_me</code>, plus <code>like_count</code>, <code>comment_count</code>.
-
-## Comments
 
 ## 💬 Comments API — Cheatsheet
 
