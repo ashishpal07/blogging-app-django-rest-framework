@@ -62,3 +62,121 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 ---
 
 ## 🗂 Project Structure
+project-root/
+├─ manage.py
+├─ requirements.txt
+├─ .env.example
+├─ blogginapplication/ # project (settings/urls/wsgi/asgi)
+│ ├─ init.py
+│ ├─ settings.py
+│ ├─ urls.py
+│ └─ asgi.py / wsgi.py
+└─ blog/ # main app
+├─ init.py
+├─ apps.py
+├─ models.py
+├─ signals.py # user -> profile auto-create
+├─ permissions.py
+├─ utils/ # helpers (slugify, auth_user, text utils…)
+│ └─ init.py
+├─ serializers/
+│ ├─ init.py
+│ ├─ auth.py # Register, Me, ChangePassword, DTOs
+│ ├─ posts.py # PostList, PostDetail, PostWrite…
+│ ├─ comments.py # CommentRead/Write/Reply
+│ └─ common.py # UserMini, Category/Tag serializers
+├─ views/
+│ ├─ init.py
+│ ├─ auth.py # Register, Me, ChangePassword
+│ ├─ posts.py # PostViewSet (publish/like/bookmark)
+│ ├─ taxonomy.py # CategoryViewSet, TagViewSet
+│ └─ comments.py # CommentViewSet
+└─ urls.py # routers + auth routes
+
+
+---
+
+## 🚀 Quick Start
+
+> Prereqs: **Python 3.12**, **Git**. (SQLite by default; Postgres optional)
+
+```bash
+# 1) Clone
+git clone <YOUR_REPO_URL>
+cd <YOUR_REPO_FOLDER>
+
+# 2) Virtualenv
+python -m venv .venv
+# mac/linux:
+source .venv/bin/activate
+# windows (powershell):
+# .\.venv\Scripts\Activate
+
+# 3) Install deps
+pip install -r requirements.txt
+
+# 4) Environment
+cp .env.example .env
+# then edit .env (see below)
+
+# 5) DB & superuser (optional)
+python manage.py migrate
+python manage.py createsuperuser
+
+# 6) Run dev server
+python manage.py runserver
+
+# 7) Open docs
+# Swagger UI:   http://127.0.0.1:8000/api/docs/
+# OpenAPI JSON: http://127.0.0.1:8000/api/schema/
+
+## ⚙️ Configuration
+
+# Security
+DJANGO_SECRET_KEY=change-me
+DEBUG=True
+ALLOWED_HOSTS=127.0.0.1,localhost
+
+# DB (defaults to SQLite if not set)
+# For Postgres (optional):
+# DATABASE_URL=postgresql://USER:PASSWORD@127.0.0.1:5432/blogdb
+
+# JWT lifetimes
+SIMPLE_JWT_ACCESS_MINUTES=1
+SIMPLE_JWT_REFRESH_DAYS=7
+
+# Media (dev)
+MEDIA_URL=/media/
+MEDIA_ROOT=media
+
+## 📚 API Documentation
+
+Swagger UI → GET /api/docs/
+
+OpenAPI schema (JSON) → GET /api/schema/
+Import the JSON into Postman to auto-generate a collection.
+
+## 🔑 Auth Flow
+
+### Endpoints
+
+POST /api/auth/register/ → create user, returns { user, access, refresh }
+
+POST /api/token/ → login (username/password) → { access, refresh }
+
+POST /api/token/refresh/ → refresh access
+
+GET /api/auth/me/ → current user (Bearer token)
+
+POST /api/auth/password/change/ → change password (Bearer token)
+
+## Register request
+{
+  "username": "ashish",
+  "email": "ashish@example.com",
+  "first_name": "Ashish",
+  "last_name": "Pal",
+  "password": "StrongP@ssw0rd",
+  "confirm_password": "StrongP@ssw0rd"
+}
+
