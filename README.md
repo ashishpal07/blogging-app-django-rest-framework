@@ -830,15 +830,72 @@ erDiagram
 * Signals: apps.py -> ready(): from . import signals and INSTALLED_APPS = ["blog.apps.BlogConfig", ...]
 
 
-## Permissions
+## 🛡️ Permissions
 
-* Categories/Tags: IsAdminOrReadOnly
+<p align="center">
+  <img src="https://img.shields.io/badge/Read-Public-4CAF50?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Write-Auth%20%2F%20Admin-FF9800?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Object--Level-Author%20Only-9C27B0?style=for-the-badge" />
+</p>
 
-* Posts/Comments: IsAuthenticatedOrReadOnly + object-level IsAuthorOrReadOnly
+<table>
+  <tr>
+    <th>Area</th>
+    <th>Endpoints</th>
+    <th>Base Permission</th>
+    <th>Object-Level</th>
+    <th>Notes</th>
+  </tr>
 
-* Queryset perf: select_related("author","category"), prefetch_related("tags"), annotate() counts
+  <tr>
+    <td><strong>Categories</strong></td>
+    <td><code>GET/POST /api/categories/</code><br/><code>GET/PUT/PATCH/DELETE /api/categories/{slug}/</code></td>
+    <td><code>IsAdminOrReadOnly</code></td>
+    <td>—</td>
+    <td>GET public; writes only for staff/admin.</td>
+  </tr>
 
-* Swagger assets: install & add drf_spectacular_sidecar to INSTALLED_APPS
+  <tr>
+    <td><strong>Tags</strong></td>
+    <td><code>GET/POST /api/tags/</code><br/><code>GET/PUT/PATCH/DELETE /api/tags/{slug}/</code></td>
+    <td><code>IsAdminOrReadOnly</code></td>
+    <td>—</td>
+    <td>GET public; writes only for staff/admin.</td>
+  </tr>
+
+  <tr>
+    <td><strong>Posts</strong></td>
+    <td><code>GET/POST /api/posts/</code><br/><code>GET/PUT/PATCH/DELETE /api/posts/{id}/</code></td>
+    <td><code>IsAuthenticatedOrReadOnly</code></td>
+    <td><code>IsAuthorOrReadOnly</code> (update/delete)</td>
+    <td>Author or admin hi edit/delete kar sakte.</td>
+  </tr>
+
+  <tr>
+    <td><strong>Post Actions</strong></td>
+    <td><code>POST /api/posts/{id}/publish|unpublished/</code><br/><code>POST/DELETE /api/posts/{id}/like/</code><br/><code>POST/DELETE /api/posts/{id}/bookmark/</code></td>
+    <td><code>IsAuthenticated</code></td>
+    <td>Publish/Unpublish: <code>IsAuthorOrReadOnly</code> + admin override</td>
+    <td>Like/Bookmark require login; idempotent behavior.</td>
+  </tr>
+
+  <tr>
+    <td><strong>Comments</strong></td>
+    <td><code>GET/POST /api/comments/</code><br/><code>GET/PUT/PATCH/DELETE /api/comments/{id}/</code></td>
+    <td><code>IsAuthenticatedOrReadOnly</code></td>
+    <td><code>IsAuthorOrReadOnly</code> (update/delete)</td>
+    <td>Single-level replies; visibility rules apply.</td>
+  </tr>
+
+  <tr>
+    <td><strong>Profile</strong></td>
+    <td><code>GET/PATCH /api/me/profile/</code></td>
+    <td><code>IsAuthenticated</code></td>
+    <td>—</td>
+    <td>Apna hi profile; multipart PATCH for avatar.</td>
+  </tr>
+</table>
+
 
 ## VS Code Debug (optional)
 Create .vscode/launch.json:
