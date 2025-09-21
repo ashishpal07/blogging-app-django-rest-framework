@@ -229,7 +229,7 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 
 ## 🔗 Core Endpoints
 
-## 🗂 Categories API — Cheatsheet (admin write)
+## 🗂 Categories API — (admin write)
 <!-- 🗂 Categories — logo header -->
 <p align="center">
   <img src="https://img.shields.io/badge/Categories-Taxonomy-8BC34A?logo=googleclassroom&logoColor=white&style=for-the-badge" alt="Categories">
@@ -300,7 +300,7 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 
 ---
 
-## 🏷 Tags API — Cheatsheet (admin write)
+## 🏷 Tags API — (admin write)
 
 <!-- 🏷 Tags — logo header -->
 <p align="center">
@@ -371,7 +371,7 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 - <strong>Slug</strong> is unique and used in Post write payloads (e.g., <code>"tags": ["drf","django"]</code>).
 - Keep names human-readable; use lowercase hyphenated slugs for consistency.
 
-## 📝 Posts API — Cheatsheet
+## 📝 Posts API
 
 <p align="center">
   <img src="https://img.shields.io/badge/Posts-Blog-FF5722?logo=blogger&logoColor=white&style=for-the-badge" alt="Posts">
@@ -478,7 +478,7 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 - Publish rule: <code>PUBLISHED</code> posts must have a non-empty <code>body</code>.
 - Flags in list/detail: <code>is_liked_by_me</code>, <code>is_bookmarked_by_me</code>, plus <code>like_count</code>, <code>comment_count</code>.
 
-## 💬 Comments API — Cheatsheet
+## 💬 Comments API
 
 <!-- 💬 Comments — logo header -->
 <p align="center">
@@ -548,11 +548,44 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 - Typical filters: <code>?post=&lt;id&gt;</code>, plus pagination: <code>?page=1&amp;page_size=10</code>.
 
 
-## Profile
+<!-- 👤 Profile — logo header -->
+<p align="center">
+  <img src="https://img.shields.io/badge/Profile-API-607D8B?logo=gravatar&logoColor=white&style=for-the-badge" alt="Profile API">
+  &nbsp;
+  <img src="https://img.shields.io/badge/Avatar-Upload-455A64?style=for-the-badge" alt="Avatar Upload">
+  &nbsp;
+  <img src="https://img.shields.io/badge/Protected-Bearer%20JWT-263238?style=for-the-badge" alt="Protected">
+</p>
 
-GET /api/me/profile/
+## 👤 Profile
 
-PATCH /api/me/profile/ (multipart for avatar, text for display_name, bio)
+> Requires <code>Authorization: Bearer &lt;access_token&gt;</code>.
+
+<table>
+  <tr>
+    <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
+    <td><code>/api/me/profile/</code></td>
+    <td>Get my profile (display_name, bio, avatar, etc.).</td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/PATCH-purple?style=for-the-badge" /></td>
+    <td><code>/api/me/profile/</code></td>
+    <td>
+      Update profile (multipart).<br/>
+      <strong>Fields:</strong> <code>display_name</code> (text), <code>bio</code> (text), <code>avatar</code> (file).
+    </td>
+  </tr>
+</table>
+
+### Example (cURL) — update with avatar
+```bash
+curl -X PATCH http://127.0.0.1:8000/api/me/profile/ \
+  -H "Authorization: Bearer <ACCESS_TOKEN>" \
+  -H "Accept: application/json" \
+  -F "display_name=Ashish" \
+  -F "bio=Backend dev & blogger" \
+  -F "avatar=@/path/to/avatar.jpg"
+
 
 
 ## 🧠 Data Model (3NF)
