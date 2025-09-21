@@ -281,19 +281,40 @@ Profile: 1—1 User (auto-create via signal)
 
 ## 💡 Development Tips
 ```
-Media (dev): urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+* Media (dev): urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-Signals: apps.py -> ready(): from . import signals and INSTALLED_APPS = ["blog.apps.BlogConfig", ...]
+* Signals: apps.py -> ready(): from . import signals and INSTALLED_APPS = ["blog.apps.BlogConfig", ...]
 ```
 
 ## Permissions
 
-Categories/Tags: IsAdminOrReadOnly
+* Categories/Tags: IsAdminOrReadOnly
 
-Posts/Comments: IsAuthenticatedOrReadOnly + object-level IsAuthorOrReadOnly
+* Posts/Comments: IsAuthenticatedOrReadOnly + object-level IsAuthorOrReadOnly
 
-Queryset perf: select_related("author","category"), prefetch_related("tags"), annotate() counts
+* Queryset perf: select_related("author","category"), prefetch_related("tags"), annotate() counts
 
-Swagger assets: install & add drf_spectacular_sidecar to INSTALLED_APPS
+* Swagger assets: install & add drf_spectacular_sidecar to INSTALLED_APPS
 
 ## VS Code Debug (optional)
+Create .vscode/launch.json:
+```
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Django: runserver (debug)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/manage.py",
+      "args": ["runserver", "127.0.0.1:8000", "--noreload"],
+      "django": true,
+      "justMyCode": true,
+      "env": {
+        "DJANGO_SETTINGS_MODULE": "blogginapplication.settings",
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    }
+  ]
+}
+```
