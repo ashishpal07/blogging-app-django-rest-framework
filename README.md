@@ -34,8 +34,8 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 - [API Documentation](#api-documentation)
 - [Auth Flow](#auth-flow)
 - [Core Endpoints](#core-endpoints)
-  - [Categories API — (admin write)](#categories-api--admin-write)
-  - [Tags API — (admin write)](#tags-api--admin-write)
+  - [Categories API — (admin write)](#categories-api-admin-write)
+  - [Tags API — (admin write)](#tags-api-admin-write)
   - [Posts API](#posts-api)
   - [Comments API](#comments-api)
   - [Profile](#profile)
@@ -44,6 +44,7 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 - [Development Tips](#development-tips)
 - [Permissions](#permissions)
 - [VS Code Debug (optional)](#vs-code-debug-optional)
+
 
 ---
 
