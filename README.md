@@ -228,7 +228,7 @@ POST /api/posts/{id}/like/ & DELETE /api/posts/{id}/like/
 POST /api/posts/{id}/bookmark/ & DELETE /api/posts/{id}/bookmark/
 
 ## Create Post (write serializer expects slugs)
-
+```
 {
   "title": "DRF Tips",
   "body": "Best practices...",
@@ -236,6 +236,7 @@ POST /api/posts/{id}/bookmark/ & DELETE /api/posts/{id}/bookmark/
   "category": "python",           // category slug
   "tags": ["drf","django"]        // tag slugs
 }
+```
 
 
 Publish rule: PUBLISHED posts must have non-empty body.
