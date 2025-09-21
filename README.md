@@ -682,6 +682,127 @@ erDiagram
     }
 ```
 
+## 📘 Compact Field Reference (Django Models)
+
+> Types follow Django field names; “App-level” = enforced by serializer/logic (not DB constraint).
+
+### 👤 User (Django built-in)
+| Field       | Type      | Constraints / Notes                          |
+|------------|-----------|-----------------------------------------------|
+| id         | AutoField | PK                                            |
+| username   | CharField | **Unique (DB)**                               |
+| email      | EmailField| App-level unique check in Register serializer  |
+| first_name | CharField | optional                                      |
+| last_name  | CharField | optional                                      |
+| password   | CharField | hashed                                        |
+
+---
+
+### 🧑‍🎨 Profile (1–1 with User)
+| Field        | Type        | Constraints / Notes                    |
+|--------------|-------------|---------------------------------------|
+| id           | AutoField   | PK                                    |
+| user         | OneToOne    | **Unique (DB)** → `auth.User`         |
+| display_name | CharField   | optional                              |
+| bio          | TextField   | optional                              |
+| avatar       | ImageField  | optional (served via `/media/`)       |
+
+---
+
+### 🗂 Category
+| Field      | Type        | Constraints / Notes                     |
+|------------|-------------|-----------------------------------------|
+| id         | AutoField   | PK                                      |
+| name       | CharField   | required                                |
+| slug       | SlugField   | **Unique (DB)**                         |
+| created_at | DateTime    | auto-add                                |
+| updated_at | DateTime    | auto-update                             |
+
+---
+
+### 🏷 Tag
+| Field      | Type        | Constraints / Notes                     |
+|------------|-------------|-----------------------------------------|
+| id         | AutoField   | PK                                      |
+| name       | CharField   | required                                |
+| slug       | SlugField   | **Unique (DB)**                         |
+| created_at | DateTime    | auto-add                                |
+| updated_at | DateTime    | auto-update                             |
+
+---
+
+### 📝 Post
+| Field         | Type        | Constraints / Notes                                                                 |
+|---------------|-------------|--------------------------------------------------------------------------------------|
+| id            | AutoField   | PK                                                                                   |
+| author        | FK(User)    | index                                                                                |
+| category      | FK(Category)| nullable / index                                                                     |
+| title         | CharField   | required                                                                             |
+| slug          | SlugField   | **Unique (DB)** (auto-generated if blank)                                            |
+| body          | TextField   | may be blank in drafts; **App-level rule**: PUBLISHED must have non-empty body       |
+| status        | CharField   | choices: `DRAFT`/`PUBLISHED`/`ARCHIVED`                                              |
+| published_at  | DateTime    | nullable                                                                             |
+| created_at    | DateTime    | auto-add                                                                             |
+| updated_at    | DateTime    | auto-update                                                                          |
+| tags          | M2M(Tag)    | through table (`post_id`,`tag_id`) **unique pair**                                   |
+
+---
+
+### 💬 Comment (one-level replies)
+| Field      | Type        | Constraints / Notes                                             |
+|------------|-------------|-----------------------------------------------------------------|
+| id         | AutoField   | PK                                                              |
+| post       | FK(Post)    | index                                                           |
+| author     | FK(User)    | index                                                           |
+| parent     | FK(Comment) | nullable (self-FK); **App-level rule**: only one-level replies  |
+| body       | TextField   | required                                                        |
+| status     | CharField   | choices: `VISIBLE`/`HIDDEN`/`PENDING`                           |
+| created_at | DateTime    | auto-add                                                        |
+| updated_at | DateTime    | auto-update                                                     |
+
+---
+
+### 👍 PostLike
+| Field   | Type      | Constraints / Notes                          |
+|---------|-----------|-----------------------------------------------|
+| id      | AutoField | PK                                            |
+| user    | FK(User)  | index                                         |
+| post    | FK(Post)  | index                                         |
+| (uniq)  | —         | **Unique together (user, post)** (DB)         |
+
+---
+
+### 🔖 Bookmark
+| Field   | Type      | Constraints / Notes                          |
+|---------|-----------|-----------------------------------------------|
+| id      | AutoField | PK                                            |
+| user    | FK(User)  | index                                         |
+| post    | FK(Post)  | index                                         |
+| (uniq)  | —         | **Unique together (user, post)** (DB)         |
+
+---
+
+### ❤️ CommentLike
+| Field    | Type        | Constraints / Notes                          |
+|----------|-------------|-----------------------------------------------|
+| id       | AutoField   | PK                                            |
+| user     | FK(User)    | index                                         |
+| comment  | FK(Comment) | index                                         |
+| (uniq)   | —           | **Unique together (user, comment)** (DB)      |
+
+---
+
+### 🧭 Recommended Indexes (perf)
+- `Post(author_id)`, `Post(category_id)`, `Post(status)`, `Post(published_at)`
+- `Comment(post_id, status)`, `Comment(parent_id)`
+- `PostLike(post_id)`, `Bookmark(post_id)`, `CommentLike(comment_id)`
+- `Category.slug`, `Tag.slug`, `Post.slug` (already unique → indexed)
+
+> 💡 **Why split constraints:** Slugs are URL identifiers → must be unique.  
+> Like/Bookmark/CommentLike use composite uniques to prevent duplicates per user.  
+> One-level replies enforced in serializers/services (not DB recursion).
+
+
 ## 💡 Development Tips
 * Media (dev): urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
