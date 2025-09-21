@@ -311,22 +311,6 @@ PUT/PATCH/DELETE /api/tags/{slug}/
 - Publish rule: <code>PUBLISHED</code> posts must have a non-empty <code>body</code>.
 - Flags in list/detail: <code>is_liked_by_me</code>, <code>is_bookmarked_by_me</code>, plus <code>like_count</code>, <code>comment_count</code>.
 
-## Create Post (write serializer expects slugs)
-```
-{
-  "title": "DRF Tips",
-  "body": "Best practices...",
-  "status": "DRAFT",
-  "category": "python",           // category slug
-  "tags": ["drf","django"]        // tag slugs
-}
-```
-
-
-Publish rule: PUBLISHED posts must have non-empty body.
-Partial update smartly uses existing body if not provided.
-
-
 ## Comments
 
 ## 💬 Comments API — Cheatsheet
