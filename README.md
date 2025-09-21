@@ -596,8 +596,6 @@ curl -X PATCH http://127.0.0.1:8000/api/me/profile/ \
   <img src="https://img.shields.io/badge/Integrity-PK%20%7C%20Unique-9C27B0?style=for-the-badge" />
 </p>
 
-> GitHub can render Mermaid. If it still doesn’t show, make sure the code block starts with <code>```mermaid</code> and there are no stray backticks.
-
 ```mermaid
 erDiagram
     USER ||--o{ POST : writes
