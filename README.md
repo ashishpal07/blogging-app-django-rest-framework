@@ -211,21 +211,105 @@ PUT/PATCH/DELETE /api/tags/{slug}/
 
 ## Posts
 
-GET /api/posts/ (search/order/paginate)
+## 📝 Posts API — Colorful Cheatsheet
 
-POST /api/posts/
+> All write ops require **Bearer JWT**. Content-Type: `application/json`.
 
-GET /api/posts/{id}/ (detail)
+<table>
+  <tr>
+    <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
+    <td><code>/api/posts/</code></td>
+    <td>
+      List posts with search/order/pagination.<br/>
+      <strong>Query</strong>:
+      <code>?search=term</code>,
+      <code>?ordering=-created_at</code>,
+      <code>?page=1&amp;page_size=10</code>,
+      <code>?category=&lt;slug&gt;</code>,
+      <code>?tags=tag1,tag2</code>
+    </td>
+  </tr>
 
-PATCH/PUT/DELETE /api/posts/{id}/
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/posts/</code></td>
+    <td>
+      Create a post (category/tags by <em>slug</em>).<br/>
+      <code>{
+        "title":"DRF Tips",
+        "body":"Best practices...",
+        "status":"DRAFT",
+        "category":"python",
+        "tags":["drf","django"]
+      }</code>
+    </td>
+  </tr>
 
-POST /api/posts/{id}/publish/
+  <tr>
+    <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
+    <td><code>/api/posts/{id}/</code></td>
+    <td>Retrieve post detail (author, category, tags, counts, flags).</td>
+  </tr>
 
-POST /api/posts/{id}/unpublished/
+  <tr>
+    <td><img src="https://img.shields.io/badge/PUT-orange?style=for-the-badge" /></td>
+    <td><code>/api/posts/{id}/</code></td>
+    <td>Full update the post (send all updatable fields).</td>
+  </tr>
 
-POST /api/posts/{id}/like/ & DELETE /api/posts/{id}/like/
+  <tr>
+    <td><img src="https://img.shields.io/badge/PATCH-purple?style=for-the-badge" /></td>
+    <td><code>/api/posts/{id}/</code></td>
+    <td>Partial update (e.g., <code>{ "status":"PUBLISHED" }</code>).</td>
+  </tr>
 
-POST /api/posts/{id}/bookmark/ & DELETE /api/posts/{id}/bookmark/
+  <tr>
+    <td><img src="https://img.shields.io/badge/DELETE-red?style=for-the-badge" /></td>
+    <td><code>/api/posts/{id}/</code></td>
+    <td>Delete the post (author or admin only).</td>
+  </tr>
+
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/posts/{id}/publish/</code></td>
+    <td>Publish the post (requires non-empty <code>body</code>).</td>
+  </tr>
+
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/posts/{id}/unpublished/</code></td>
+    <td>Unpublish (revert to draft/hidden state).</td>
+  </tr>
+
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/posts/{id}/like/</code></td>
+    <td>Like the post (idempotent).</td>
+  </tr>
+
+  <tr>
+    <td><img src="https://img.shields.io/badge/DELETE-red?style=for-the-badge" /></td>
+    <td><code>/api/posts/{id}/like/</code></td>
+    <td>Unlike the post.</td>
+  </tr>
+
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/posts/{id}/bookmark/</code></td>
+    <td>Bookmark the post.</td>
+  </tr>
+
+  <tr>
+    <td><img src="https://img.shields.io/badge/DELETE-red?style=for-the-badge" /></td>
+    <td><code>/api/posts/{id}/bookmark/</code></td>
+    <td>Remove bookmark.</td>
+  </tr>
+</table>
+
+### Notes
+- <strong>Write serializer expects slugs</strong> for <code>category</code> and <code>tags</code>.
+- Publish rule: <code>PUBLISHED</code> posts must have a non-empty <code>body</code>.
+- Flags in list/detail: <code>is_liked_by_me</code>, <code>is_bookmarked_by_me</code>, plus <code>like_count</code>, <code>comment_count</code>.
 
 ## Create Post (write serializer expects slugs)
 ```
@@ -245,7 +329,7 @@ Partial update smartly uses existing body if not provided.
 
 ## Comments
 
-## 💬 Comments API — Colorful Cheatsheet
+## 💬 Comments API — Cheatsheet
 
 > All write ops require **Bearer JWT**. Content-Type: `application/json`.
 
