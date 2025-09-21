@@ -185,6 +185,13 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 
 ## 🔑 Auth Flow
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Auth-JWT-000000?logo=jsonwebtokens&logoColor=white&style=for-the-badge" alt="JWT">
+  &nbsp;
+  <img src="https://img.shields.io/badge/Register/Login/Refresh/Me/Change-Password-3F51B5?style=for-the-badge" alt="Auth Flow">
+</p>
+
+
 > All bodies are <code>application/json</code>. Protected routes require <code>Authorization: Bearer &lt;access_token&gt;</code>.
 
 <table>
