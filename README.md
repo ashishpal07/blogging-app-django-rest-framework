@@ -157,6 +157,17 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 
 ## 📚 API Documentation
 
+<p align="center">
+  <a href="/api/docs/">
+    <img src="https://img.shields.io/badge/Swagger-UI-85EA2D?logo=swagger&logoColor=white&style=for-the-badge" alt="Swagger UI">
+  </a>
+  &nbsp;
+  <a href="/api/schema/">
+    <img src="https://img.shields.io/badge/OpenAPI-3.0-6BA539?logo=openapiinitiative&logoColor=white&style=for-the-badge" alt="OpenAPI 3.0">
+  </a>
+</p>
+
+
 <table>
   <tr>
     <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
@@ -335,6 +346,13 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 - Keep names human-readable; use lowercase hyphenated slugs for consistency.
 
 ## 📝 Posts API — Cheatsheet
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Posts-Blog-FF5722?logo=blogger&logoColor=white&style=for-the-badge" alt="Posts">
+  &nbsp;
+  <img src="https://img.shields.io/badge/Content-Create/Read/Update/Delete-795548?style=for-the-badge" alt="CRUD">
+</p>
+
 
 > All write ops require **Bearer JWT**. Content-Type: `application/json`.
 
