@@ -592,32 +592,24 @@ curl -X PATCH http://127.0.0.1:8000/api/me/profile/ \
 
 <p align="center">
   <img src="https://img.shields.io/badge/Schema-3NF-4CAF50?style=for-the-badge" />
-  &nbsp;
   <img src="https://img.shields.io/badge/Relations-1:1%20%7C%201:N%20%7C%20N:M-2196F3?style=for-the-badge" />
-  &nbsp;
-  <img src="https://img.shields.io/badge/Integrity-Unique%20%26%20FKs-9C27B0?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Integrity-PK%20%7C%20Unique-9C27B0?style=for-the-badge" />
 </p>
 
-### 🎯 ER Diagram (Mermaid)
-
-> GitHub renders Mermaid automatically. If viewing elsewhere, use a Mermaid-capable viewer.
+> GitHub can render Mermaid. If it still doesn’t show, make sure the code block starts with <code>```mermaid</code> and there are no stray backticks.
 
 ```mermaid
 erDiagram
-    USER ||--o{ POST : "author of"
-    USER ||--o{ COMMENT : "writes"
-    USER ||--|| PROFILE : "has 1"
-    USER ||--o{ POST_LIKE : "likes"
-    USER ||--o{ BOOKMARK : "bookmarks"
-    USER ||--o{ COMMENT_LIKE : "likes"
-
-    POST ||--o{ COMMENT : "has"
-    POST ||--o{ POST_LIKE : "liked by"
-    POST ||--o{ BOOKMARK : "bookmarked by"
-    POST }o--o{ TAG : "tagged with"
-    CATEGORY ||--o{ POST : "categorizes"
-
-    COMMENT ||--o| COMMENT : "parent (one-level reply)"
+    USER ||--o{ POST : writes
+    USER ||--o{ COMMENT : writes
+    USER ||--|| PROFILE : has
+    CATEGORY ||--o{ POST : categorizes
+    POST }o--o{ TAG : tagged_with
+    POST ||--o{ COMMENT : has
+    USER ||--o{ POST_LIKE : likes
+    USER ||--o{ BOOKMARK : bookmarks
+    USER ||--o{ COMMENT_LIKE : likes
+    COMMENT ||--o{ COMMENT : has_reply
 
     USER {
       int id PK
@@ -627,7 +619,7 @@ erDiagram
 
     PROFILE {
       int id PK
-      int user_id UK, FK
+      int user_id
       string display_name
       string bio
       string avatar
@@ -636,7 +628,7 @@ erDiagram
     CATEGORY {
       int id PK
       string name
-      string slug UK
+      string slug
       datetime created_at
       datetime updated_at
     }
@@ -644,54 +636,51 @@ erDiagram
     TAG {
       int id PK
       string name
-      string slug UK
+      string slug
       datetime created_at
       datetime updated_at
     }
 
     POST {
       int id PK
-      int author_id FK
-      int category_id FK NULL
+      int author_id
+      int category_id
       string title
-      string slug UK
+      string slug
       text body
-      enum status   // DRAFT|PUBLISHED|ARCHIVED
-      datetime published_at NULL
+      string status
+      datetime published_at
       datetime created_at
       datetime updated_at
     }
 
     COMMENT {
       int id PK
-      int post_id FK
-      int author_id FK
-      int parent_id FK NULL // self-FK, one-level
+      int post_id
+      int author_id
+      int parent_id
       text body
-      enum status // VISIBLE|HIDDEN|PENDING
+      string status
       datetime created_at
       datetime updated_at
     }
 
     POST_LIKE {
       int id PK
-      int user_id FK
-      int post_id FK
-      // UNIQUE (user_id, post_id)
+      int user_id
+      int post_id
     }
 
     COMMENT_LIKE {
       int id PK
-      int user_id FK
-      int comment_id FK
-      // UNIQUE (user_id, comment_id)
+      int user_id
+      int comment_id
     }
 
     BOOKMARK {
       int id PK
-      int user_id FK
-      int post_id FK
-      // UNIQUE (user_id, post_id)
+      int user_id
+      int post_id
     }
 ```
 
