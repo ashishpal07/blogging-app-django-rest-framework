@@ -69,6 +69,7 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 
 ---
 
+<a id="project-structure"></a>
 ## 🗂 Project Structure
 
 <p align="center">
@@ -119,6 +120,7 @@ project-root/
 
 ---
 
+<a id="quick-start"></a>
 ## 🚀 Quick Start
 
 > Prereqs: **Python 3.12**, **Git**. (SQLite by default; Postgres optional)
@@ -154,6 +156,7 @@ python manage.py runserver
 # OpenAPI JSON: http://127.0.0.1:8000/api/schema/
 ```
 
+<a id="configuration"></a>
 ## ⚙️ Configuration
 
 ## Security
