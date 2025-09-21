@@ -209,18 +209,6 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
   </tr>
 </table>
 
-### Register request (example)
-```json
-{
-  "username": "ashish",
-  "email": "ashish@example.com",
-  "first_name": "Ashish",
-  "last_name": "Pal",
-  "password": "StrongP@ssw0rd",
-  "confirm_password": "StrongP@ssw0rd"
-}
-
-
 ## 🔗 Core Endpoints
 ## 🗂 Categories API — Cheatsheet (admin write)
 
