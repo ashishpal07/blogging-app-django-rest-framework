@@ -62,39 +62,52 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 ---
 
 ## 🗂 Project Structure
-```
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Django-App-092E20?logo=django&logoColor=white&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/DRF-API-ff1709?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/OpenAPI-Swagger-85EA2D?logo=swagger&logoColor=white&style=for-the-badge" />
+</p>
+
+```text
 project-root/
 ├─ manage.py
 ├─ requirements.txt
 ├─ .env.example
-├─ blogginapplication/ # project (settings/urls/wsgi/asgi)
-│ ├─ init.py
-│ ├─ settings.py
-│ ├─ urls.py
-│ └─ asgi.py / wsgi.py
-└─ blog/ # main app
-├─ init.py
-├─ apps.py
-├─ models.py
-├─ signals.py # user -> profile auto-create
-├─ permissions.py
-├─ utils/ # helpers (slugify, auth_user, text utils…)
-│ └─ init.py
-├─ serializers/
-│ ├─ init.py
-│ ├─ auth.py # Register, Me, ChangePassword, DTOs
-│ ├─ posts.py # PostList, PostDetail, PostWrite…
-│ ├─ comments.py # CommentRead/Write/Reply
-│ └─ common.py # UserMini, Category/Tag serializers
-├─ views/
-│ ├─ init.py
-│ ├─ auth.py # Register, Me, ChangePassword
-│ ├─ posts.py # PostViewSet (publish/like/bookmark)
-│ ├─ taxonomy.py # CategoryViewSet, TagViewSet
-│ └─ comments.py # CommentViewSet
-└─ urls.py # routers + auth routes
+├─ .vscode/                       # (optional) VS Code debug config
+│  └─ launch.json
+├─ blogginapplication/            # Django project (settings/urls/wsgi/asgi)
+│  ├─ __init__.py
+│  ├─ settings.py
+│  ├─ urls.py
+│  ├─ asgi.py
+│  └─ wsgi.py
+└─ blog/                          # Main app
+   ├─ __init__.py
+   ├─ apps.py
+   ├─ models.py
+   ├─ signals.py                  # user → profile auto-create
+   ├─ permissions.py
+   ├─ utils/                      # helpers (slugify, auth_user, text utils…)
+   │  ├─ __init__.py
+   │  ├─ slug.py
+   │  └─ text.py
+   ├─ serializers/
+   │  ├─ __init__.py
+   │  ├─ auth.py                  # Register, Me, ChangePassword, DTOs
+   │  ├─ posts.py                 # PostList, PostDetail, PostWrite…
+   │  ├─ comments.py              # CommentRead/Write/Reply
+   │  └─ common.py                # UserMini, Category/Tag serializers
+   ├─ views/
+   │  ├─ __init__.py
+   │  ├─ auth.py                  # Register, Me, ChangePassword
+   │  ├─ posts.py                 # PostViewSet (publish/like/bookmark)
+   │  ├─ taxonomy.py              # CategoryViewSet, TagViewSet
+   │  └─ comments.py              # CommentViewSet
+   ├─ migrations/
+   │  └─ __init__.py
+   └─ urls.py                     # routers + auth routes
 ```
-
 
 ---
 
