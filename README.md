@@ -34,8 +34,8 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 - [API Documentation](#api-documentation)
 - [Auth Flow](#auth-flow)
 - [Core Endpoints](#core-endpoints)
-  - [Categories API — (admin write)](#categories-api-admin-write)
-  - [Tags API — (admin write)](#tags-api-admin-write)
+  - [Categories API — (admin write)](#categories-api)
+  - [Tags API — (admin write)](#tags-api)
   - [Posts API](#posts-api)
   - [Comments API](#comments-api)
   - [Profile](#profile)
@@ -44,7 +44,6 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 - [Development Tips](#development-tips)
 - [Permissions](#permissions)
 - [VS Code Debug (optional)](#vs-code-debug-optional)
-
 
 ---
 
@@ -250,6 +249,7 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 
 ## 🔗 Core Endpoints
 
+<a id="categories-api"></a>
 ## 🗂 Categories API — (admin write)
 <!-- 🗂 Categories — logo header -->
 <p align="center">
@@ -321,6 +321,7 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 
 ---
 
+<a id="tags-api"></a>
 ## 🏷 Tags API — (admin write)
 
 <!-- 🏷 Tags — logo header -->
@@ -392,6 +393,7 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 - <strong>Slug</strong> is unique and used in Post write payloads (e.g., <code>"tags": ["drf","django"]</code>).
 - Keep names human-readable; use lowercase hyphenated slugs for consistency.
 
+<a id="posts-api"></a>
 ## 📝 Posts API
 
 <p align="center">
@@ -499,6 +501,7 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 - Publish rule: <code>PUBLISHED</code> posts must have a non-empty <code>body</code>.
 - Flags in list/detail: <code>is_liked_by_me</code>, <code>is_bookmarked_by_me</code>, plus <code>like_count</code>, <code>comment_count</code>.
 
+<a id="comments-api"></a>
 ## 💬 Comments API
 
 <!-- 💬 Comments — logo header -->
