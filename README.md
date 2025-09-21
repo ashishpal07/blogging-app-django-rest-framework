@@ -175,6 +175,7 @@ GET /api/auth/me/ → current user (Bearer token)
 POST /api/auth/password/change/ → change password (Bearer token)
 
 ## Register request
+```
 {
   "username": "ashish",
   "email": "ashish@example.com",
@@ -183,6 +184,7 @@ POST /api/auth/password/change/ → change password (Bearer token)
   "password": "StrongP@ssw0rd",
   "confirm_password": "StrongP@ssw0rd"
 }
+```
 
 ## 🔗 Core Endpoints
 ## Categories (admin write)
