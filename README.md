@@ -228,6 +228,16 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 </table>
 
 ## 🔗 Core Endpoints
+<!-- 🗂 Categories — logo header -->
+<p align="center">
+  <img src="https://img.shields.io/badge/Categories-Taxonomy-8BC34A?logo=googleclassroom&logoColor=white&style=for-the-badge" alt="Categories">
+  &nbsp;
+  <img src="https://img.shields.io/badge/Slug--Based-Yes-689F38?style=for-the-badge" alt="Slug Based">
+  &nbsp;
+  <img src="https://img.shields.io/badge/Admin-Write-558B2F?style=for-the-badge" alt="Admin Write">
+</p>
+
+
 ## 🗂 Categories API — Cheatsheet (admin write)
 
 > List is public; **create/update/delete require admin/staff** (IsAdminOrReadOnly).
@@ -292,6 +302,16 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 ---
 
 ## 🏷 Tags API — Cheatsheet (admin write)
+
+<!-- 🏷 Tags — logo header -->
+<p align="center">
+  <img src="https://img.shields.io/badge/Tags-Many--to--Many-7E57C2?logo=hashnode&logoColor=white&style=for-the-badge" alt="Tags">
+  &nbsp;
+  <img src="https://img.shields.io/badge/Slugs-Required-5C6BC0?style=for-the-badge" alt="Slugs Required">
+  &nbsp;
+  <img src="https://img.shields.io/badge/Admin-Write-3949AB?style=for-the-badge" alt="Admin Write">
+</p>
+
 
 > List is public; **create/update/delete require admin/staff** (IsAdminOrReadOnly).
 
@@ -460,6 +480,16 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 - Flags in list/detail: <code>is_liked_by_me</code>, <code>is_bookmarked_by_me</code>, plus <code>like_count</code>, <code>comment_count</code>.
 
 ## 💬 Comments API — Cheatsheet
+
+<!-- 💬 Comments — logo header -->
+<p align="center">
+  <img src="https://img.shields.io/badge/Comments-API-00BCD4?logo=discourse&logoColor=white&style=for-the-badge" alt="Comments API">
+  &nbsp;
+  <img src="https://img.shields.io/badge/Replies-One%20Level-009688?style=for-the-badge" alt="One-level replies">
+  &nbsp;
+  <img src="https://img.shields.io/badge/CRUD-GET%20POST%20PUT%20PATCH%20DELETE-795548?style=for-the-badge" alt="CRUD">
+</p>
+
 
 > All write ops require **Bearer JWT**. Content-Type: `application/json`.
 
