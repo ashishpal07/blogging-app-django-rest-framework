@@ -129,6 +129,7 @@ python manage.py runserver
 # 7) Open docs
 # Swagger UI:   http://127.0.0.1:8000/api/docs/
 # OpenAPI JSON: http://127.0.0.1:8000/api/schema/
+```
 
 ## ⚙️ Configuration
 
