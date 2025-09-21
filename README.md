@@ -133,20 +133,20 @@ python manage.py runserver
 
 ## ⚙️ Configuration
 
-# Security
+## Security
 DJANGO_SECRET_KEY=change-me
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
 
-# DB (defaults to SQLite if not set)
-# For Postgres (optional):
-# DATABASE_URL=postgresql://USER:PASSWORD@127.0.0.1:5432/blogdb
+DB (defaults to SQLite if not set)
+For Postgres (optional):
+DATABASE_URL=postgresql://USER:PASSWORD@127.0.0.1:5432/blogdb
 
-# JWT lifetimes
+## JWT lifetimes
 SIMPLE_JWT_ACCESS_MINUTES=1
 SIMPLE_JWT_REFRESH_DAYS=7
 
-# Media (dev)
+## Media (dev)
 MEDIA_URL=/media/
 MEDIA_ROOT=media
 
