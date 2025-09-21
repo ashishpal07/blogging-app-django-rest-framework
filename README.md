@@ -228,6 +228,8 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 </table>
 
 ## 🔗 Core Endpoints
+
+## 🗂 Categories API — Cheatsheet (admin write)
 <!-- 🗂 Categories — logo header -->
 <p align="center">
   <img src="https://img.shields.io/badge/Categories-Taxonomy-8BC34A?logo=googleclassroom&logoColor=white&style=for-the-badge" alt="Categories">
@@ -236,9 +238,6 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
   &nbsp;
   <img src="https://img.shields.io/badge/Admin-Write-558B2F?style=for-the-badge" alt="Admin Write">
 </p>
-
-
-## 🗂 Categories API — Cheatsheet (admin write)
 
 > List is public; **create/update/delete require admin/staff** (IsAdminOrReadOnly).
 
