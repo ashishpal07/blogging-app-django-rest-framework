@@ -249,3 +249,40 @@ Profile
 GET /api/me/profile/
 
 PATCH /api/me/profile/ (multipart for avatar, text for display_name, bio)
+
+
+## 🧠 Data Model (3NF)
+
+User —< Post
+
+User —< Comment (self FK parent → one-level replies)
+
+Category 1—* Post
+
+Tag — Post (through table)
+
+PostLike: unique (user, post)
+
+CommentLike: unique (user, comment)
+
+Bookmark: unique (user, post)
+
+Profile: 1—1 User (auto-create via signal)
+
+## 💡 Development Tips
+
+Media (dev): urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+Signals: apps.py -> ready(): from . import signals and INSTALLED_APPS = ["blog.apps.BlogConfig", ...]
+
+Permissions
+
+Categories/Tags: IsAdminOrReadOnly
+
+Posts/Comments: IsAuthenticatedOrReadOnly + object-level IsAuthorOrReadOnly
+
+Queryset perf: select_related("author","category"), prefetch_related("tags"), annotate() counts
+
+Swagger assets: install & add drf_spectacular_sidecar to INSTALLED_APPS
+
+## VS Code Debug (optional)
