@@ -261,7 +261,7 @@ PATCH /api/me/profile/ (multipart for avatar, text for display_name, bio)
 
 
 ## 🧠 Data Model (3NF)
-
+```
 User —< Post
 
 User —< Comment (self FK parent → one-level replies)
@@ -277,6 +277,7 @@ CommentLike: unique (user, comment)
 Bookmark: unique (user, post)
 
 Profile: 1—1 User (auto-create via signal)
+```
 
 ## 💡 Development Tips
 
