@@ -38,7 +38,7 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
   - [Tags API — (admin write)](#tags-api)
   - [Posts API](#posts-api)
   - [Comments API](#comments-api)
-  - [Profile](#profile)
+  - [Profile](#profile-api)
 - [Data Model (3NF)](#data-model-3nf)
 - [Compact Field Reference (Django Models)](#compact-field-reference-django-models)
 - [Development Tips](#development-tips)
