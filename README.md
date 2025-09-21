@@ -280,12 +280,13 @@ Profile: 1—1 User (auto-create via signal)
 ```
 
 ## 💡 Development Tips
-
+```
 Media (dev): urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 Signals: apps.py -> ready(): from . import signals and INSTALLED_APPS = ["blog.apps.BlogConfig", ...]
+```
 
-Permissions
+## Permissions
 
 Categories/Tags: IsAdminOrReadOnly
 
