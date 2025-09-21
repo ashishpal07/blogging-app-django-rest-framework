@@ -157,27 +157,60 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 
 ## 📚 API Documentation
 
-Swagger UI → GET /api/docs/
+<table>
+  <tr>
+    <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
+    <td><code>/api/docs/</code></td>
+    <td>Swagger UI</td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
+    <td><code>/api/schema/</code></td>
+    <td>OpenAPI schema (JSON) — import into Postman to auto-generate a collection</td>
+  </tr>
+</table>
 
-OpenAPI schema (JSON) → GET /api/schema/
-Import the JSON into Postman to auto-generate a collection.
+---
 
 ## 🔑 Auth Flow
 
-### Endpoints
+> All bodies are <code>application/json</code>. Protected routes require <code>Authorization: Bearer &lt;access_token&gt;</code>.
 
-POST /api/auth/register/ → create user, returns { user, access, refresh }
+<table>
+  <tr>
+    <th>Method</th>
+    <th>Endpoint</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/auth/register/</code></td>
+    <td>Create user, returns <code>{ user, access, refresh }</code></td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/token/</code></td>
+    <td>Login (username/password) → <code>{ access, refresh }</code></td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/token/refresh/</code></td>
+    <td>Refresh access token</td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
+    <td><code>/api/auth/me/</code></td>
+    <td>Current user info (Bearer token)</td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/auth/password/change/</code></td>
+    <td>Change password (Bearer token)</td>
+  </tr>
+</table>
 
-POST /api/token/ → login (username/password) → { access, refresh }
-
-POST /api/token/refresh/ → refresh access
-
-GET /api/auth/me/ → current user (Bearer token)
-
-POST /api/auth/password/change/ → change password (Bearer token)
-
-## Register request
-```
+### Register request (example)
+```json
 {
   "username": "ashish",
   "email": "ashish@example.com",
@@ -186,7 +219,7 @@ POST /api/auth/password/change/ → change password (Bearer token)
   "password": "StrongP@ssw0rd",
   "confirm_password": "StrongP@ssw0rd"
 }
-```
+
 
 ## 🔗 Core Endpoints
 ## 🗂 Categories API — Cheatsheet (admin write)
@@ -313,7 +346,7 @@ POST /api/auth/password/change/ → change password (Bearer token)
 - <strong>Slug</strong> is unique and used in Post write payloads (e.g., <code>"tags": ["drf","django"]</code>).
 - Keep names human-readable; use lowercase hyphenated slugs for consistency.
 
-## 📝 Posts API — Colorful Cheatsheet
+## 📝 Posts API — Cheatsheet
 
 > All write ops require **Bearer JWT**. Content-Type: `application/json`.
 
