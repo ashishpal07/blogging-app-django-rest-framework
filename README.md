@@ -134,6 +134,7 @@ python manage.py runserver
 ## ⚙️ Configuration
 
 ## Security
+```
 DJANGO_SECRET_KEY=change-me
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
@@ -142,13 +143,15 @@ DB (defaults to SQLite if not set)
 For Postgres (optional):
 DATABASE_URL=postgresql://USER:PASSWORD@127.0.0.1:5432/blogdb
 
-## JWT lifetimes
-### SIMPLE_JWT_ACCESS_MINUTES=1
-### SIMPLE_JWT_REFRESH_DAYS=7
+#JWT lifetimes
+SIMPLE_JWT_ACCESS_MINUTES=1
+SIMPLE_JWT_REFRESH_DAYS=7
 
-## Media (dev)
-### MEDIA_URL=/media/
-### MEDIA_ROOT=media
+# Media (dev)
+MEDIA_URL=/media/
+MEDIA_ROOT=media
+```
+Make sure settings.py reads these (via os.environ or python-dotenv).
 
 ## 📚 API Documentation
 
