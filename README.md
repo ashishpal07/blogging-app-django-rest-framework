@@ -59,6 +59,7 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 
 ---
 
+<a id="tech-stack"></a>
 ## 🧰 Tech Stack
 - **Django** 5.x, **Django REST Framework** 3.x
 - **SimpleJWT** for tokens
