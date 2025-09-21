@@ -828,9 +828,29 @@ erDiagram
 
 
 ## 💡 Development Tips
-* Media (dev): urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-* Signals: apps.py -> ready(): from . import signals and INSTALLED_APPS = ["blog.apps.BlogConfig", ...]
+<p align="center">
+  <img src="https://img.shields.io/badge/Hot%20Reload-runserver-4CAF50?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Media-ImageField-03A9F4?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Schema-Swagger%20%2F%20OpenAPI-8BC34A?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Auth-JWT-000000?logo=jsonwebtokens&logoColor=white&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/DB-Migrations-9C27B0?style=for-the-badge" />
+</p>
+
+### ✅ Quick essentials
+- `.env` ko **commit mat** karo (use `.env.example`).
+- **Migrations** lifecycle: `makemigrations` → `migrate`.
+- Swagger assets ke liye **drf-spectacular-sidecar** ko `INSTALLED_APPS` me add rakho.
+- Image uploads ke liye `MEDIA_URL` / `MEDIA_ROOT` configure + dev me static serve.
+
+---
+
+### 🖼 Media (avatars, images)
+**settings.py**
+```py
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
 
 
 ## 🛡️ Permissions
