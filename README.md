@@ -47,6 +47,7 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 
 ---
 
+<a id="features"></a>
 ## ✨ Features
 - 🔐 **JWT Auth** with access/refresh + **Register** endpoint
 - 📝 **Posts** CRUD, publish/unpublish, **likes**, **bookmarks**
@@ -179,6 +180,7 @@ MEDIA_ROOT=media
 ```
 Make sure settings.py reads these (via os.environ or python-dotenv).
 
+<a id="api-documentation"></a>
 ## 📚 API Documentation
 
 <p align="center">
@@ -207,6 +209,7 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 
 ---
 
+<a id="auth-flow"></a>
 ## 🔑 Auth Flow
 
 <p align="center">
@@ -251,6 +254,7 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
   </tr>
 </table>
 
+<a id="core-endpoints"></a>
 ## 🔗 Core Endpoints
 
 <a id="categories-api"></a>
@@ -616,7 +620,7 @@ curl -X PATCH http://127.0.0.1:8000/api/me/profile/ \
   -F "avatar=@/path/to/avatar.jpg"
 ```
 
-
+<a id="data-model-3nf"></a>
 ## 🧠 Data Model (3NF)
 
 <p align="center">
@@ -711,6 +715,7 @@ erDiagram
     }
 ```
 
+<a id="compact-field-reference-django-models"></a>
 ## 📘 Compact Field Reference (Django Models)
 
 > Types follow Django field names; “App-level” = enforced by serializer/logic (not DB constraint).
@@ -831,7 +836,7 @@ erDiagram
 > Like/Bookmark/CommentLike use composite uniques to prevent duplicates per user.  
 > One-level replies enforced in serializers/services (not DB recursion).
 
-
+<a id="development-tips"></a>
 ## 💡 Development Tips
 
 <p align="center">
@@ -858,7 +863,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 ```
 
 
-
+<a id="permissions"></a>
 ## 🛡️ Permissions
 
 <p align="center">
@@ -926,6 +931,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 </table>
 
 
+<a id="vs-code-debug-optional"></a>
 ## VS Code Debug (optional)
 Create .vscode/launch.json:
 ```
