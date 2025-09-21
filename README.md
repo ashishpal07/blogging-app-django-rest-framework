@@ -143,12 +143,12 @@ For Postgres (optional):
 DATABASE_URL=postgresql://USER:PASSWORD@127.0.0.1:5432/blogdb
 
 ## JWT lifetimes
-SIMPLE_JWT_ACCESS_MINUTES=1
-SIMPLE_JWT_REFRESH_DAYS=7
+### SIMPLE_JWT_ACCESS_MINUTES=1
+### SIMPLE_JWT_REFRESH_DAYS=7
 
 ## Media (dev)
-MEDIA_URL=/media/
-MEDIA_ROOT=media
+### MEDIA_URL=/media/
+### MEDIA_ROOT=media
 
 ## 📚 API Documentation
 
