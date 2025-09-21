@@ -19,13 +19,11 @@ from ..filter import PostFilter
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    print("Post view set initialized")
     filterset_class = PostFilter
     permission_classes = [IsAuthOrReadOnly, IsAuthenticatedOrReadOnly, IsAuthenticated]
     throttle_scope = None
 
     def get_queryset(self):
-        print("Fetching queryset for postviewset")
         qs = (
             Post.objects.select_related("author", "category")
             .prefetch_related("tags")
@@ -56,7 +54,6 @@ class PostViewSet(viewsets.ModelViewSet):
         tags = params.get("tags")
         if tags:
             slugs = [t.strip() for t in tags.split(",") if t.strip()]
-            print("slugs:", slugs)
             if slugs:
                 qs = qs.filter(tags__slug__in=slugs).distinct()
 

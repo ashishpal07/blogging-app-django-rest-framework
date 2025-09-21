@@ -82,7 +82,6 @@ class PostDetailsSerializer(PostListSerializer):
 
 
 class PostWriteSerializer(serializers.ModelSerializer):
-    print("PostwriteSerializer initialized")
     category = serializers.SlugRelatedField(
         queryset=Category.objects.all(),
         slug_field="slug",
