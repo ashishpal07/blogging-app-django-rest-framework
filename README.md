@@ -62,6 +62,7 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 ---
 
 ## 🗂 Project Structure
+```
 project-root/
 ├─ manage.py
 ├─ requirements.txt
@@ -92,6 +93,7 @@ project-root/
 │ ├─ taxonomy.py # CategoryViewSet, TagViewSet
 │ └─ comments.py # CommentViewSet
 └─ urls.py # routers + auth routes
+```
 
 
 ---
