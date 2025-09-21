@@ -220,3 +220,32 @@ POST /api/posts/{id}/like/ & DELETE /api/posts/{id}/like/
 POST /api/posts/{id}/bookmark/ & DELETE /api/posts/{id}/bookmark/
 
 ## Create Post (write serializer expects slugs)
+
+{
+  "title": "DRF Tips",
+  "body": "Best practices...",
+  "status": "DRAFT",
+  "category": "python",           // category slug
+  "tags": ["drf","django"]        // tag slugs
+}
+
+
+Publish rule: PUBLISHED posts must have non-empty body.
+Partial update smartly uses existing body if not provided.
+
+
+Comments
+
+GET /api/comments/?post=<post_id>
+
+POST /api/comments/ ({ post, body })
+
+POST /api/comments/ reply ({ post, parent, body }) one-level replies
+
+GET/PUT/PATCH/DELETE /api/comments/{id}/
+
+Profile
+
+GET /api/me/profile/
+
+PATCH /api/me/profile/ (multipart for avatar, text for display_name, bio)
