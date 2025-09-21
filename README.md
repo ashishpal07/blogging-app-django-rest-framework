@@ -585,26 +585,114 @@ curl -X PATCH http://127.0.0.1:8000/api/me/profile/ \
   -F "display_name=Ashish" \
   -F "bio=Backend dev & blogger" \
   -F "avatar=@/path/to/avatar.jpg"
-
+```
 
 
 ## 🧠 Data Model (3NF)
-```
-User —< Post
 
-User —< Comment (self FK parent → one-level replies)
+<p align="center">
+  <img src="https://img.shields.io/badge/Schema-3NF-4CAF50?style=for-the-badge" />
+  &nbsp;
+  <img src="https://img.shields.io/badge/Relations-1:1%20%7C%201:N%20%7C%20N:M-2196F3?style=for-the-badge" />
+  &nbsp;
+  <img src="https://img.shields.io/badge/Integrity-Unique%20%26%20FKs-9C27B0?style=for-the-badge" />
+</p>
 
-Category 1—* Post
+### 🎯 ER Diagram (Mermaid)
 
-Tag — Post (through table)
+> GitHub renders Mermaid automatically. If viewing elsewhere, use a Mermaid-capable viewer.
 
-PostLike: unique (user, post)
+```mermaid
+erDiagram
+    USER ||--o{ POST : "author of"
+    USER ||--o{ COMMENT : "writes"
+    USER ||--|| PROFILE : "has 1"
+    USER ||--o{ POST_LIKE : "likes"
+    USER ||--o{ BOOKMARK : "bookmarks"
+    USER ||--o{ COMMENT_LIKE : "likes"
 
-CommentLike: unique (user, comment)
+    POST ||--o{ COMMENT : "has"
+    POST ||--o{ POST_LIKE : "liked by"
+    POST ||--o{ BOOKMARK : "bookmarked by"
+    POST }o--o{ TAG : "tagged with"
+    CATEGORY ||--o{ POST : "categorizes"
 
-Bookmark: unique (user, post)
+    COMMENT ||--o| COMMENT : "parent (one-level reply)"
 
-Profile: 1—1 User (auto-create via signal)
+    USER {
+      int id PK
+      string username
+      string email
+    }
+
+    PROFILE {
+      int id PK
+      int user_id UK, FK
+      string display_name
+      string bio
+      string avatar
+    }
+
+    CATEGORY {
+      int id PK
+      string name
+      string slug UK
+      datetime created_at
+      datetime updated_at
+    }
+
+    TAG {
+      int id PK
+      string name
+      string slug UK
+      datetime created_at
+      datetime updated_at
+    }
+
+    POST {
+      int id PK
+      int author_id FK
+      int category_id FK NULL
+      string title
+      string slug UK
+      text body
+      enum status   // DRAFT|PUBLISHED|ARCHIVED
+      datetime published_at NULL
+      datetime created_at
+      datetime updated_at
+    }
+
+    COMMENT {
+      int id PK
+      int post_id FK
+      int author_id FK
+      int parent_id FK NULL // self-FK, one-level
+      text body
+      enum status // VISIBLE|HIDDEN|PENDING
+      datetime created_at
+      datetime updated_at
+    }
+
+    POST_LIKE {
+      int id PK
+      int user_id FK
+      int post_id FK
+      // UNIQUE (user_id, post_id)
+    }
+
+    COMMENT_LIKE {
+      int id PK
+      int user_id FK
+      int comment_id FK
+      // UNIQUE (user_id, comment_id)
+    }
+
+    BOOKMARK {
+      int id PK
+      int user_id FK
+      int post_id FK
+      // UNIQUE (user_id, post_id)
+    }
 ```
 
 ## 💡 Development Tips
