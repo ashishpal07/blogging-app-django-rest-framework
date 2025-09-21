@@ -581,6 +581,7 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
   <img src="https://img.shields.io/badge/Protected-Bearer%20JWT-263238?style=for-the-badge" alt="Protected">
 </p>
 
+<a id="profile-api"></a>
 ## 👤 Profile
 
 > Requires <code>Authorization: Bearer &lt;access_token&gt;</code>.
