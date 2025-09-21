@@ -243,17 +243,69 @@ Publish rule: PUBLISHED posts must have non-empty body.
 Partial update smartly uses existing body if not provided.
 
 
-Comments
+## Comments
 
-GET /api/comments/?post=<post_id>
+## 💬 Comments API — Colorful Cheatsheet
 
-POST /api/comments/ ({ post, body })
+> All write ops require **Bearer JWT**. Content-Type: `application/json`.
 
-POST /api/comments/ reply ({ post, parent, body }) one-level replies
+<table>
+  <tr>
+    <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
+    <td><code>/api/comments/?post={post_id}</code></td>
+    <td>List comments (and one-level replies) for a post.</td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/comments/</code></td>
+    <td>
+      Create a top-level comment.<br/>
+      <code>{ "post": 123, "body": "Nice article!" }</code>
+    </td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/POST-brightgreen?style=for-the-badge" /></td>
+    <td><code>/api/comments/</code></td>
+    <td>
+      Create a reply (single-level).<br/>
+      <code>{ "post": 123, "parent": 456, "body": "Thanks!" }</code>
+    </td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/GET-blue?style=for-the-badge" /></td>
+    <td><code>/api/comments/{id}/</code></td>
+    <td>Retrieve a specific comment.</td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/PUT-orange?style=for-the-badge" /></td>
+    <td><code>/api/comments/{id}/</code></td>
+    <td>
+      Full update a comment.<br/>
+      <code>{ "post": 123, "body": "Edited text" }</code>
+    </td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/PATCH-purple?style=for-the-badge" /></td>
+    <td><code>/api/comments/{id}/</code></td>
+    <td>
+      Partial update a comment.<br/>
+      <code>{ "body": "Edited (partial)" }</code>
+    </td>
+  </tr>
+  <tr>
+    <td><img src="https://img.shields.io/badge/DELETE-red?style=for-the-badge" /></td>
+    <td><code>/api/comments/{id}/</code></td>
+    <td>Delete a comment.</td>
+  </tr>
+</table>
 
-GET/PUT/PATCH/DELETE /api/comments/{id}/
+### Notes
+- Replies are **single-level** only (no reply-to-reply nesting).
+- Visibility/status rules apply if implemented (e.g., only <code>VISIBLE</code> comments returned).
+- Typical filters: <code>?post=&lt;id&gt;</code>, plus pagination: <code>?page=1&amp;page_size=10</code>.
 
-Profile
+
+## Profile
 
 GET /api/me/profile/
 
