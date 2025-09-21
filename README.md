@@ -838,10 +838,10 @@ erDiagram
 </p>
 
 ### ✅ Quick essentials
-- `.env` ko **commit mat** karo (use `.env.example`).
+- do not **commint** `.env` (use `.env.example`).
 - **Migrations** lifecycle: `makemigrations` → `migrate`.
-- Swagger assets ke liye **drf-spectacular-sidecar** ko `INSTALLED_APPS` me add rakho.
-- Image uploads ke liye `MEDIA_URL` / `MEDIA_ROOT` configure + dev me static serve.
+- For swagger assets add **drf-spectacular-sidecar** int `INSTALLED_APPS`.
+- For image upload `MEDIA_URL` / `MEDIA_ROOT` configure + int dev static serve.
 
 ---
 
@@ -916,7 +916,7 @@ MEDIA_ROOT = BASE_DIR / "media"
     <td><code>GET/PATCH /api/me/profile/</code></td>
     <td><code>IsAuthenticated</code></td>
     <td>—</td>
-    <td>Apna hi profile; multipart PATCH for avatar.</td>
+    <td>Your profile; multipart PATCH for avatar.</td>
   </tr>
 </table>
 
