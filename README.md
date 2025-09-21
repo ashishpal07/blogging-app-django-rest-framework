@@ -180,3 +180,43 @@ POST /api/auth/password/change/ → change password (Bearer token)
   "confirm_password": "StrongP@ssw0rd"
 }
 
+## 🔗 Core Endpoints
+## Categories (admin write)
+
+GET /api/categories/
+
+POST /api/categories/ ({ name, slug })
+
+GET /api/categories/{slug}/
+
+PUT/PATCH/DELETE /api/categories/{slug}/
+
+## Tags (admin write)
+
+GET /api/tags/
+
+POST /api/tags/ ({ name, slug })
+
+GET /api/tags/{slug}/
+
+PUT/PATCH/DELETE /api/tags/{slug}/
+
+## Posts
+
+GET /api/posts/ (search/order/paginate)
+
+POST /api/posts/
+
+GET /api/posts/{id}/ (detail)
+
+PATCH/PUT/DELETE /api/posts/{id}/
+
+POST /api/posts/{id}/publish/
+
+POST /api/posts/{id}/unpublished/
+
+POST /api/posts/{id}/like/ & DELETE /api/posts/{id}/like/
+
+POST /api/posts/{id}/bookmark/ & DELETE /api/posts/{id}/bookmark/
+
+## Create Post (write serializer expects slugs)
