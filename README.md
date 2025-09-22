@@ -82,6 +82,7 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 ```text
 project-root/
 ├─ manage.py
+├─ Blog API.yaml
 ├─ requirements.txt
 ├─ .env.example
 ├─ .vscode/                       # (optional) VS Code debug config
@@ -98,24 +99,38 @@ project-root/
    ├─ models.py
    ├─ signals.py                  # user → profile auto-create
    ├─ permissions.py
-   ├─ utils/                      # helpers (slugify, auth_user, text utils…)
-   │  ├─ __init__.py
-   │  ├─ slug.py
-   │  └─ text.py
+   ├─ utility/                      # helpers (slugify, auth_user, text utils…)
+   │  └─ utils.py
    ├─ serializers/
    │  ├─ __init__.py
    │  ├─ auth.py                  # Register, Me, ChangePassword, DTOs
    │  ├─ posts.py                 # PostList, PostDetail, PostWrite…
    │  ├─ comments.py              # CommentRead/Write/Reply
+   │  ├─ reactions.py 
    │  └─ common.py                # UserMini, Category/Tag serializers
    ├─ views/
    │  ├─ __init__.py
    │  ├─ auth.py                  # Register, Me, ChangePassword
    │  ├─ posts.py                 # PostViewSet (publish/like/bookmark)
    │  ├─ taxonomy.py              # CategoryViewSet, TagViewSet
+   │  ├─ profile.py 
    │  └─ comments.py              # CommentViewSet
-   ├─ migrations/
-   │  └─ __init__.py
+   ├─ modles/
+   │  ├─ __init__.py
+   │  ├─ bookmark.py                  
+   │  ├─ post.py
+   │  ├─ post_like.py
+   │  ├─ post_tag.py              
+   │  ├─ comments.py
+   │  ├─ comment_like.py
+   │  ├─ category.py
+   │  ├─ profile.py
+   │  ├─ tag.py
+   │  └─ common.py     
+   ├─ migrations/                 
+   │  ├─ __init__.py
+   │  ├─ 0001_initial.py
+   │  └─ 0002_bookmark.py 
    └─ urls.py                     # routers + auth routes
 ```
 
