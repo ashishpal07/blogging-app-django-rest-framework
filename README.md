@@ -82,6 +82,7 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 ```text
 project-root/
 ├─ manage.py
+├─ Blog API.yaml
 ├─ requirements.txt
 ├─ .env.example
 ├─ .vscode/                       # (optional) VS Code debug config
