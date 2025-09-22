@@ -2,7 +2,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from .views.post import PostViewSet
 from .views.comment import CommentViewSet
-from .views.texomony import CategoryViewSet, TagViewSet
+from .views.taxomony import CategoryViewSet, TagViewSet
 from .views.profile import MeProfileView
 from .views.auth import RegisterView, MeView, ChangePasswordView
 

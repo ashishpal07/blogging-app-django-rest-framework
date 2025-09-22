@@ -55,3 +55,9 @@ def is_bookmarked_by_user(user, *, post_id: Optional[int] = None):
 def make_excerpt(text: str, length: int = 160) -> str:
     text = (text or "").strip()
     return (text[:length] + "...") if len(text) > length else text
+
+def _slug_ok(slug: str) -> str:
+    slug = (slug or "").strip().lower()
+    if not slug:
+        raise ValidationError("slug is required.")
+    return slug

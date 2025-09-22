@@ -1,6 +1,6 @@
 from .comment import CommentViewSet
 from .post import PostViewSet
-from .texomony import CategoryViewSet, TagViewSet
+from .taxomony import CategoryViewSet, TagViewSet
 from .profile import MeProfileView
 from .auth import RegisterView, MeView, ChangePasswordView
 

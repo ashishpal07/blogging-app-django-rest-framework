@@ -6,8 +6,16 @@ from ..models import Comment
 from ..serializers import CommentReadSerializer, CommentWriteSerializer
 from ..permissions import IsAuthOrReadOnly
 
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status, serializers
+from drf_spectacular.utils import extend_schema, inline_serializer
+from ..models import CommentLike
+
 
 class CommentViewSet(viewsets.ModelViewSet):
+    throttle_scope = None
     permission_classes = [IsAuthOrReadOnly, IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
@@ -28,3 +36,23 @@ class CommentViewSet(viewsets.ModelViewSet):
         if self.action in ["create", "update", "partial_update"]:
             return CommentWriteSerializer
         return CommentReadSerializer
+    
+    @extend_schema(
+        request=None,
+        responses=inline_serializer(
+            name="LikeResponse", fields={"liked": serializers.BooleanField()}
+        ),
+    )
+    @action(
+        detail=True,
+        methods=["post", "delete"],
+        permission_classes=[IsAuthenticated],
+        throttle_scope="write",
+    )
+    def like(self, request, pk=None):
+        comment = self.get_object()
+        if request.method.lower() == "post":
+            CommentLike.objects.get_or_create(user=request.user, comment=comment)
+            return Response({"liked": True}, status=status.HTTP_201_CREATED)
+        CommentLike.objects.filter(user=request.user, comment=comment).delete()
+        return Response({"liked": False}, status=status.HTTP_204_NO_CONTENT)
