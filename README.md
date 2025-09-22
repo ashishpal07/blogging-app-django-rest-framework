@@ -99,10 +99,8 @@ project-root/
    ├─ models.py
    ├─ signals.py                  # user → profile auto-create
    ├─ permissions.py
-   ├─ utils/                      # helpers (slugify, auth_user, text utils…)
-   │  ├─ __init__.py
-   │  ├─ slug.py
-   │  └─ text.py
+   ├─ utility/                      # helpers (slugify, auth_user, text utils…)
+   │  └─ utils.py
    ├─ serializers/
    │  ├─ __init__.py
    │  ├─ auth.py                  # Register, Me, ChangePassword, DTOs
