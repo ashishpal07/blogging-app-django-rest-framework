@@ -195,8 +195,10 @@ MEDIA_ROOT=media
 ```
 Make sure settings.py reads these (via os.environ or python-dotenv).
 
-```
-%%{init: {'theme':'forest', 'sequence': {'actorFontSize': 16, 'messageFontSize': 14, 'boxTextMargin': 10, 'mirrorActors': false}}}%%
+### 📝 Create Post Flow
+
+```mermaid
+%%{init: {'theme':'forest', 'sequence': {'actorFontSize': 16, 'messageFontSize': 14, 'mirrorActors': false}}}%%
 sequenceDiagram
     autonumber
     participant Client as 🟢 Client
@@ -208,7 +210,7 @@ sequenceDiagram
     Client->>DRFRouter: POST /api/posts
     DRFRouter->>ViewSet: dispatch(<b>create</b>)
     ViewSet->>Serializer: validate(data, context=request)
-    Serializer->>DB: INSERT <b>blog_post</b><br/>(within transaction)
+    Serializer->>DB: INSERT <b>blog_post</b> (within transaction)
     DB-->>Serializer: ✅ Post instance
     Serializer-->>ViewSet: Serialized JSON response
     ViewSet-->>Client: 201 Created (application/json)
