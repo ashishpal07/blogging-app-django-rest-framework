@@ -200,7 +200,7 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 ## 📝 Request flow
 
 <p align="center">
-  <img src="https://img.shields.io/badge/API-Request%20Flow-2196F3?logo=apacheairflow&logoColor=white&style=for-the-badge" alt="API Request Flow">
+  <img src="https://img.shields.io/badge/Request--Response-API%20Flow-673AB7?logo=reactrouter&logoColor=white&style=for-the-badge" alt="API Request Flow">
 </p>
 
 
