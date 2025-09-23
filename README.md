@@ -31,6 +31,7 @@ Features: posts, categories, tags, comments (single-level replies), likes, bookm
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
   - [Security](#security)
+- [Request Flow](#request-flow)
 - [API Documentation](#api-documentation)
 - [Auth Flow](#auth-flow)
 - [Core Endpoints](#core-endpoints)
@@ -195,7 +196,8 @@ MEDIA_ROOT=media
 ```
 Make sure settings.py reads these (via os.environ or python-dotenv).
 
-### 📝 Request flow
+<a id="request-flow"></a>
+## 📝 Request flow
 
 ```mermaid
 %%{init: {'theme':'forest', 'sequence': {'actorFontSize': 16, 'messageFontSize': 14, 'mirrorActors': false}}}%%
