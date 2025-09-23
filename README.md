@@ -195,7 +195,7 @@ MEDIA_ROOT=media
 ```
 Make sure settings.py reads these (via os.environ or python-dotenv).
 
-### 📝 Create Post Flow
+### 📝 Request flow
 
 ```mermaid
 %%{init: {'theme':'forest', 'sequence': {'actorFontSize': 16, 'messageFontSize': 14, 'mirrorActors': false}}}%%
