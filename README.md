@@ -199,6 +199,16 @@ Make sure settings.py reads these (via os.environ or python-dotenv).
 <a id="request-flow"></a>
 ## 📝 Request flow
 
+<p align="center">
+  <img src="https://static.djangoproject.com/img/logos/django-logo-positive.svg" height="60" alt="Django">
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://www.django-rest-framework.org/img/logo.png" height="60" alt="DRF">
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://img.shields.io/badge/Auth-JWT-000000?logo=jsonwebtokens&logoColor=white&style=for-the-badge" alt="JWT">
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://img.shields.io/badge/API-Flow-2196F3?logo=swagger&logoColor=white&style=for-the-badge" alt="API Flow">
+</p>
+
 ```mermaid
 %%{init: {'theme':'forest', 'sequence': {'actorFontSize': 16, 'messageFontSize': 14, 'mirrorActors': false}}}%%
 sequenceDiagram
