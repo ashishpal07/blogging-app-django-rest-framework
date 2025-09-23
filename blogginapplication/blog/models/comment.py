@@ -27,10 +27,11 @@ class Comment(TimestampedModel):
     )
 
     class Meta:
-        db_table = 'blog_comment'
+        db_table = "blog_comment"
         indexes = [
-            models.Index(fields=['post', 'created_at']),
-            models.Index(fields=['status']),
+            models.Index(fields=["post", "created_at"]),
+            models.Index(fields=["status"]),
         ]
+
     def __str__(self):
         return f"{self.pk} on {self.post_id}"
