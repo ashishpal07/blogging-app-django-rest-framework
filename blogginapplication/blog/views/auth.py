@@ -1,3 +1,4 @@
+import pdb
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -13,6 +14,9 @@ from ..serializers import (
 from django.contrib.auth.hashers import check_password
 from drf_spectacular.utils import extend_schema
 
+from ..services import register_user
+from ..exceptions.exception import raise_api_for
+
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
@@ -21,17 +25,23 @@ class RegisterView(APIView):
         request=RegisterSerializer, responses={201: RegisterResponseSerializer}
     )
     def post(self, request):
+        pdb.set_trace()
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        refresh_token = RefreshToken.for_user(user)
+
+        user = None
+        try:
+            user = register_user(**serializer.validated_data)
+            print(user)
+        except Exception as e:
+            raise_api_for(e)
+        refresh = RefreshToken.for_user(user)
         return Response(
             {
-                "user": RegisterSerializer(user).data,
-                "refresh": str(refresh_token),
-                "access": str(refresh_token.access_token),
-            },
-            status=status.HTTP_201_CREATED,
+                "user": UserMeSerializer(user).data,
+                "access": str(refresh.access_token),
+                "refresh": str(refresh)
+            }, status=status.HTTP_201_CREATED
         )
 
 

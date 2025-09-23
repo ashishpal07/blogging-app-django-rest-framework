@@ -1,58 +1,61 @@
-from django.db.models import Count
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from ..models import Comment
-from ..serializers import CommentReadSerializer, CommentWriteSerializer
-from ..permissions import IsAuthOrReadOnly
-
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import status, serializers
-from drf_spectacular.utils import extend_schema, inline_serializer
-from ..models import CommentLike
-
+from ..serializers import CommentWriteSerializer, CommentReadSerializer
+from ..models import Comment, CommentStatus
+from django.db.models import Count
+from ..services import create_comment, update_comment, delete_comment
+from ..exceptions import DomainError, raise_api_for
 
 class CommentViewSet(viewsets.ModelViewSet):
-    throttle_scope = None
-    permission_classes = [IsAuthOrReadOnly, IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
-    def get_queryset(self):
-        qs = Comment.objects.select_related("author", "post", "parent").annotate(
-            like_count=Count("likes", distinct=True)
-        )
-
-        post_id = self.request.query_params.get("post")
-        if post_id:
-            qs = qs.filter(post_id=post_id)
-        param_status = self.request.query_params.get("status")
-        if param_status:
-            qs = qs.filter(status=param_status)
-
-        return qs.order_by("-created_at")
+    queryset = Comment.objects.all().select_related("author","post","parent").annotate(
+        like_count=Count("likes")
+    )
 
     def get_serializer_class(self):
-        if self.action in ["create", "update", "partial_update"]:
-            return CommentWriteSerializer
-        return CommentReadSerializer
-    
-    @extend_schema(
-        request=None,
-        responses=inline_serializer(
-            name="LikeResponse", fields={"liked": serializers.BooleanField()}
-        ),
-    )
-    @action(
-        detail=True,
-        methods=["post", "delete"],
-        permission_classes=[IsAuthenticated],
-        throttle_scope="write",
-    )
-    def like(self, request, pk=None):
-        comment = self.get_object()
-        if request.method.lower() == "post":
-            CommentLike.objects.get_or_create(user=request.user, comment=comment)
-            return Response({"liked": True}, status=status.HTTP_201_CREATED)
-        CommentLike.objects.filter(user=request.user, comment=comment).delete()
-        return Response({"liked": False}, status=status.HTTP_204_NO_CONTENT)
+        if self.action in ("list","retrieve"):
+            return CommentReadSerializer
+        return CommentWriteSerializer
+
+    def list(self, request, *args, **kwargs):
+        post_id = request.query_params.get("post")
+        qs = self.get_queryset()
+        if post_id:
+            qs = qs.filter(post_id=post_id, parent__isnull=True, status=CommentStatus.VISIBLE)
+        data = CommentReadSerializer(qs, many=True, context={"request": request}).data
+        return Response(data)
+
+    def create(self, request, *args, **kwargs):
+        ser = CommentWriteSerializer(data=request.data, context={"request": request})
+        ser.is_valid(raise_exception=True)
+        try:
+            comment = create_comment(
+                author=request.user,
+                post_id=ser.validated_data["post"],
+                body=ser.validated_data["body"],
+                parent_id=ser.validated_data.get("parent"),
+            )
+        except DomainError as e:
+            raise_api_for(e)
+        return Response(CommentReadSerializer(comment, context={"request": request}).data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        comment_id = kwargs.get("pk")
+        ser = CommentWriteSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        try:
+            comment = update_comment(user=request.user, comment_id=comment_id, body=ser.validated_data["body"])
+        except DomainError as e:
+            raise_api_for(e)
+        return Response(CommentReadSerializer(comment, context={"request": request}).data)
+
+    def destroy(self, request, *args, **kwargs):
+        cid = kwargs.get("pk")
+        try:
+            delete_comment(user=request.user, comment_id=cid)
+        except DomainError as e:
+            raise_api_for(e)
+        return Response(status=status.HTTP_204_NO_CONTENT)

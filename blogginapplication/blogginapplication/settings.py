@@ -178,3 +178,10 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024  # 5MB file in-memory threshold
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+SPECTACULAR_SETTINGS = {
+    "ENUM_NAME_OVERRIDES": {
+        "PostStatusEnum": "blog.models.post.PostStatus",
+        "CommentStatusEnum": "blog.models.comment.CommentStatus",
+    },
+}

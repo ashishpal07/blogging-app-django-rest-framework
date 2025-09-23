@@ -1,17 +1,7 @@
-from django.db import transaction
-from django.contrib.auth import get_user_model
-from ..models import Post, PostLike, Bookmark
-from ..exceptions import NotFoundError
-
-User = get_user_model()
-
-
-def _get_post(pk: int) -> Post:
-    try:
-        return Post.objects.get(pk=pk)
-    except Post.DoesNotExist:
-        raise NotFoundError("Post not found.")
-
+# from django.db import transaction
+from ..models import PostLike, Bookmark, CommentLike
+from .post import _get_post
+from .comment import _get_comment
 
 def like_post(*, user, post_id: int) -> None:
     post = _get_post(post_id)
@@ -31,3 +21,13 @@ def bookmark_post(*, user, post_id: int) -> None:
 def remove_bookmark_post(*, user, post_id: int) -> None:
     post = _get_post(post_id)
     Bookmark.objects.filter(user=user, post=post).delete()
+
+
+def like_comment(*, user, comment_id: int) -> None:
+    comment = _get_comment(comment_id)
+    CommentLike.objects.get_or_create(user=user, comment=comment)
+
+
+def unlike_comment(*, user, comment_id: int) -> None:
+    comment = _get_comment(comment_id)
+    CommentLike.objects.filter(user=user, comment=comment).delete()

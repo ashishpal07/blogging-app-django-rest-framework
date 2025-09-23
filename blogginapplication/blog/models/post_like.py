@@ -16,3 +16,6 @@ class PostLike(TimestampedModel):
       models.Index(fields=["post"]),
       models.Index(fields=["user"]),
     ]
+
+# foreign key
+# group by, order by,

@@ -1,21 +1,20 @@
 from rest_framework import serializers
 from django.db import transaction
 from django.db.models import Count
-from rest_framework.validators import UniqueValidator
 
-from ..models import Category, Post, Tag, PostStatus, CommentStatus
+from ..models import Post, PostStatus, CommentStatus
 
 from .common import UserMiniSerializer, CategorySerializer, TagSerializer
 from .comment import CommentReadSerializer
 from ..utility.utils import (
-    auth_user,
-    unique_slugify,
     is_liked_by_user,
     is_bookmarked_by_user,
     make_excerpt,
 )
 
-from drf_spectacular.utils import extend_schema_field, OpenApiTypes
+from drf_spectacular.utils import extend_schema_field
+from drf_spectacular.types import OpenApiTypes
+
 
 class PostListSerializer(serializers.ModelSerializer):
     author = UserMiniSerializer(read_only=True)
@@ -60,7 +59,8 @@ class PostListSerializer(serializers.ModelSerializer):
         req = self.context.get("request")
         return is_bookmarked_by_user(getattr(req, "user", None), post_id=obj.id)
 
-    def get_excerpt(self, obj):
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_excerpt(self, obj) -> str:
         return make_excerpt(obj.body)
 
 
@@ -81,68 +81,17 @@ class PostDetailsSerializer(PostListSerializer):
         return CommentReadSerializer(qs, many=True, context=self.context).data
 
 
-class PostWriteSerializer(serializers.ModelSerializer):
-    category = serializers.SlugRelatedField(
-        queryset=Category.objects.all(),
-        slug_field="slug",
-        allow_null=True,
-        required=False,
-    )
-
-    tags = serializers.SlugRelatedField(
-        queryset=Tag.objects.all(), slug_field="slug", many=True, required=False
-    )
-
-    slug = serializers.CharField(
-        required=False,
-        allow_blank=True,
-        validators=[UniqueValidator(queryset=Post.objects.all())],
-    )
-
-    class Meta:
-        model = Post
-        fields = ("title", "body", "category", "tags", "status", "slug")
-
-    def validate_status(self, value):
-        if value not in dict(PostStatus.choices):
-            raise serializers.ValidationError("Invalid status")
-        return value;
+class PostWriteSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=200)
+    body = serializers.CharField(allow_blank=True, required=False)
+    category = serializers.SlugField(required=False, allow_null=True, allow_blank=True)
+    tags = serializers.ListField(child=serializers.SlugField(), required=False)
+    status = serializers.ChoiceField(choices=PostStatus.choices, required=False)
+    slug = serializers.CharField(required=False, allow_blank=True)
 
     def validate(self, attrs):
-        instance = getattr(self, 'instance', None)
-        
-        new_status = attrs.get("status", getattr(instance, "status", None))
-        new_body = attrs.get("body", getattr(instance, "body", None))
-        
-        if isinstance(new_body, str):
-            new_body = new_body.strip()
-
-        if new_status == PostStatus.PUBLISHED and not new_body:
+        status = attrs.get("status")
+        body = attrs.get("body", "")
+        if status == PostStatus.PUBLISHED and not (body or "").strip():
             raise serializers.ValidationError("Published post must have body.")
-        
         return attrs
-
-    @transaction.atomic
-    def create(self, validated):
-        user = auth_user(self.context.get("request"))
-        tags = validated.pop("tags", [])
-        if not validated.get("slug"):
-            validated["slug"] = unique_slugify(Post, validated.get("title"))
-        post  = Post.objects.create(author=user, **validated)
-        if tags:
-            post.tags.set(tags)
-        return post
-
-    @transaction.atomic
-    def update(self, instance, validated):
-        tags = validated.pop("tags", [])
-        if "slug" in validated and validated["slug"] == "":
-            validated["slug"] = unique_slugify(Post, validated.get("title", instance.title))
-
-        for k, v in validated.items():
-            setattr(instance, k, v)
-        instance.save()
-
-        if tags:
-            instance.tags.set(tags)
-        return instance

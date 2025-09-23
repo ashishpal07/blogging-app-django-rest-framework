@@ -5,6 +5,7 @@ from ..models import Profile, Category, Tag
 
 User = get_user_model()
 
+
 class UserMiniSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -22,12 +23,17 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(required=False, allow_null=True)
+
     class Meta:
         model = Profile
         fields = ("display_name", "bio", "avatar")
         extra_kwargs = {"avatar": {"required": False}}
 
     def validate_avatar(self, file):
+        if file in (None, "", False):
+            return None
+        if isinstance(file, str) and file.lower() == "null":
+            return None
         # size check
         max_mb = 5
         if file.size > max_mb * 1024 * 1024:
@@ -38,7 +44,6 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         if content_type and content_type not in allowed:
             raise serializers.ValidationError("Only JPEG/PNG/WEBP allowed.")
         return file
-
 
 
 class CategorySerializer(serializers.ModelSerializer):
